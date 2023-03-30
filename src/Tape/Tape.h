@@ -41,7 +41,8 @@ public:
     void ShiftLeft() override;
     void ShiftRight() override;
     void Rewind() override;
-
+    
+    std::string GetFileName();
     int64_t GetN() const override;
     int64_t GetPosition() const override;
 
@@ -54,8 +55,6 @@ private:
     int64_t CalculateN(std::string& inputFileName) const;
     void ChangeNumber(int32_t n);
     void Append(int32_t n);
-
-    std::string GetFileName();
 
     Tape() = default;
 };

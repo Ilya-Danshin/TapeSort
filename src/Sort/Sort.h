@@ -13,7 +13,7 @@
 
 class Sort: public ISort {
 public:
-    Sort(ITape* tape, std::string& out_file_name, int64_t M);
+    Sort(ITape* tape, const std::string& out_file_name, int64_t M);
 
     void Start() override;
 

@@ -62,7 +62,13 @@ TapeSettings::~TapeSettings() = default;
 
 TapeSettings &TapeSettings::operator=(TapeSettings const &other) = default;
 
-TapeSettings::TapeSettings() = default;
+TapeSettings::TapeSettings()
+{
+    this->read_delay = 0;
+    this->write_delay = 0;
+    this->shift_delay = 0;
+    this->rewind_delay = 0;
+};
 
 Tape::Tape(std::string& inputFileName, TapeSettings& settings) {
     this->position = 0;
@@ -99,14 +105,14 @@ int32_t Tape::Read() {
 }
 
 void Tape::ShiftLeft() {
-    if (this->GetPosition() <= this->GetN()) {
+    if (this->GetPosition() < this->GetN()) {
         std::this_thread::sleep_for(std::chrono::milliseconds(this->settings.GetShiftDelay()));
         this->position++;
     }
 }
 
 void Tape::ShiftRight() {
-    if (this->GetPosition() >= 0) {
+    if (this->GetPosition() > 0) {
         std::this_thread::sleep_for(std::chrono::milliseconds(this->settings.GetShiftDelay()));
         this->position--;
     }
@@ -124,6 +130,10 @@ int64_t Tape::CalculateN(std::string& inputFileName) const {
     if (tape_file.is_open()) {
         int32_t value;
         int64_t i = 0;
+
+        if(tape_file.peek() == std::ifstream::traits_type::eof()) {
+            return 0;
+        }
 
         do {
             tape_file >> value;

@@ -3,7 +3,7 @@
 #include "Sort.h"
 #include "../Tape/Tape.h"
 
-Sort::Sort(ITape *tape, std::string& out_file_name, int64_t M) {
+Sort::Sort(ITape *tape, const std::string& out_file_name, int64_t M) {
     this->tape = tape;
     this->output_file_name = out_file_name;
     this->M = M;

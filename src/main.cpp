@@ -10,25 +10,27 @@ void DeleteDirectoryContents(const std::string &dir_path) {
 }
 
 int main(int argc, char** argv) {
-    std::string setting("../../src/settings.txt");
-    TapeSettings settings(setting);
-    std::string inpFile;
-    std::string outFile;
+    TapeSettings settings("../../src/settings.txt");
+    const char* inpFile;
+    const char* outFile;
 
     DeleteDirectoryContents("../../src/tmp");
 
     if (argc > 1) {
-        inpFile = std::string(argv[1]);
-        outFile = std::string(argv[2]);
+        inpFile = argv[1];
+        outFile = argv[2];
     } else {
-        inpFile = std::string("../../src/input.txt");
-        outFile = std::string("../../src/output.txt");
+        inpFile = "../../src/input.txt";
+        outFile = "../../src/output.txt";
     }
 
     auto tape = (ITape*) new Tape(inpFile, settings);
 
     auto sort = (ISort*) new Sort(tape, outFile, 9);
     sort->Start();
+
+    delete tape;
+    delete sort;
 
     return 0;
 }
